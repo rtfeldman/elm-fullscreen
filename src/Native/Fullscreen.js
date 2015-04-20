@@ -8,6 +8,7 @@ Elm.Native.History.make = function(localRuntime){
     return localRuntime.Native.Fullscreen.values;
   }
 
+  var fullscreenErrorEvent = "fullscreenerror";
   var NS = Elm.Native.Signal.make(localRuntime);
   var Task = Elm.Native.Task.make(localRuntime);
   var Utils = Elm.Native.Utils.make(localRuntime);
@@ -70,15 +71,28 @@ Elm.Native.History.make = function(localRuntime){
   registerFullscreenChangeListener("mozfullscreenchange");
   registerFullscreenChangeListener("webkitfullscreenchange");
 
-  // requestFullscreen : Task error ()
+  // requestFullscreen : Task RequestError ()
   var requestFullscreen = function() {
     return Task.asyncFunction(function(callback){
-      try {
-        nativeRequestFullscreen();
+      var failed = false;
+      var errorListener = function() {
+        failed = true;
+      };
 
+      try {
+        document.addEventListener(fullscreenErrorEvent, errorListener);
+
+        nativeRequestFullscreen();
+      } catch (err) {
+        failed = true;
+      } finally {
+        document.removeEventListener(fullscreenErrorEvent, errorListener);
+      }
+
+      if (failed) {
+        return callback(Task.fail({ctor: "NotAllowed"}))
+      } else {
         return callback(Task.succeed(Utils.Tuple0));
-      } catch (exception) {
-        return callback(Task.fail());
       }
     });
   };

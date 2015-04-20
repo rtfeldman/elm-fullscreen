@@ -23,6 +23,13 @@ type Status
 
 
 {-|
+  * NotAllowed - The page is not currently allowed to enter Fullscreen Mode.
+-}
+type RequestError
+  = NotAllowed
+
+
+{-|
 A signal of Booleans representing whether Fullscreen Mode is active. It begins
 False and switches to True or False as appropriate whenever a `fullscreenchange`
 event is fired on the document.
@@ -33,8 +40,15 @@ isActive =
 
 
 {-| Requests that the document enter Fullscreen Mode.
+
+Since the HTML5 spec calls for the `fullscreenerror` event to be fired only in
+the course of requesting fullscreen mode, such errors are handled by
+`Fullscreen.request`' using normal `Task` error handling instead of something
+like a Signal for the `fullscreenerror` event.
+
+See the spec for more info: https://fullscreen.spec.whatwg.org/#api
 -}
-request : Task error ()
+request : Task RequestError ()
 request =
   Native.Fullscreen.requestFullscreen
 
