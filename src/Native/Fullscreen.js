@@ -18,12 +18,14 @@ Elm.Native.History.make = function(localRuntime){
   // Helper Functions //
 
   // Cross-browser function to get the current fullscreenElement, if any.
-  function nativeHasFullscreenElement() {
-    return
+  function nativeGetFullscreenElement() {
+    var element =
       document.fullscreenElement       ||
       document.mozFullScreenElement    ||
       document.webkitFullscreenElement ||
       document.msFullscreenElement;
+
+    return element;
   }
 
   // Cross-browser function to reqeust fullscreen mode.
@@ -62,7 +64,7 @@ Elm.Native.History.make = function(localRuntime){
   // The fullscreenActive signal should be True only when fullscreen mode is active.
   function registerFullscreenChangeListener(eventName) {
     localRuntime.addListener([fullscreenActive.id], doc, eventName, function fullscreenChange(event){
-      localRuntime.notify(fullscreenActive.id, !!nativeHasFullscreenElement());
+      localRuntime.notify(fullscreenActive.id, !!nativeGetFullscreenElement());
     });
   }
 
