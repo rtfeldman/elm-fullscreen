@@ -39,7 +39,7 @@ request =
   Native.Fullscreen.requestFullscreen
 
 
-{-| Requests that the document enter Fullscreen Mode.
+{-| Requests that the document exit Fullscreen Mode.
 -}
 exit : Task error ()
 exit =
