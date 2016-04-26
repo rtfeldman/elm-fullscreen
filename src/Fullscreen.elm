@@ -2,6 +2,14 @@ module Fullscreen (Status(Active,RequestAvailable,RequestUnavailable,Unsupported
 
 {-| Elm bindings to HTML5 Fullscreen API.
 
+# Status and Errors
+@docs Status, RequestError
+
+# Request or exit Fullscreen Mode
+@docs request, exit
+
+# Status
+@docs isActive, status
 -}
 
 import Signal
@@ -13,7 +21,7 @@ import Native.Fullscreen
 {-|
   * Active - The page is currently in Fullscreen Mode.
   * RequestAvailable - The page is in a state where Fullscreen Mode can be requested.
-  * RequestUnvailable - The page is not a state where Fullscreen Mode can be requested.
+  * RequestUnvailable - The page is not in a state where Fullscreen Mode can be requested.
   * Unsupported - This browser does not support the Fullscreen API.
 -}
 type Status
