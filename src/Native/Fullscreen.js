@@ -1,6 +1,6 @@
 Elm.Native = Elm.Native || {};
-Elm.Native.History = {};
-Elm.Native.History.make = function(localRuntime){
+Elm.Native.Fullscreen = {};
+Elm.Native.Fullscreen.make = function(localRuntime){
   localRuntime.Native = localRuntime.Native || {};
   localRuntime.Native.Fullscreen = localRuntime.Native.Fullscreen || {};
 
