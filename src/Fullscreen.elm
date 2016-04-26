@@ -59,14 +59,14 @@ See the spec for more info: https://fullscreen.spec.whatwg.org/#api
 -}
 request : Task RequestError ()
 request =
-  Native.Fullscreen.requestFullscreen
+  Native.Fullscreen.request
 
 
 {-| Requests that the document exit Fullscreen Mode.
 -}
 exit : Task error ()
 exit =
-  Native.Fullscreen.exitFullscreen
+  Native.Fullscreen.exit
 
 
 {-|
