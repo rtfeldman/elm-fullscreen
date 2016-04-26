@@ -1,4 +1,5 @@
-module Fullscreen where
+module Fullscreen (Status(Active,RequestAvailable,RequestUnavailable,Unsupported), RequestError(NotAllowed), isActive, request, exit, status) where
+
 {-| Elm bindings to HTML5 Fullscreen API.
 
 -}
