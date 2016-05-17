@@ -1,6 +1,6 @@
 Elm.Native = Elm.Native || {};
-Elm.Native.History = {};
-Elm.Native.History.make = function(localRuntime){
+Elm.Native.Fullscreen = {};
+Elm.Native.Fullscreen.make = function(localRuntime){
   localRuntime.Native = localRuntime.Native || {};
   localRuntime.Native.Fullscreen = localRuntime.Native.Fullscreen || {};
 
@@ -73,9 +73,8 @@ Elm.Native.History.make = function(localRuntime){
   registerFullscreenChangeListener("mozfullscreenchange");
   registerFullscreenChangeListener("webkitfullscreenchange");
 
-  // requestFullscreen : Task RequestError ()
-  var requestFullscreen = function() {
-    return Task.asyncFunction(function(callback){
+  // request: Task RequestError ()
+  var request = Task.asyncFunction(function(callback){
       var failed = false;
       var errorListener = function() {
         failed = true;
@@ -97,11 +96,9 @@ Elm.Native.History.make = function(localRuntime){
         return callback(Task.succeed(Utils.Tuple0));
       }
     });
-  };
 
   // exitFullscreen : Task error ()
-  var exitFullscreen = function() {
-    return Task.asyncFunction(function(callback){
+  var exit = Task.asyncFunction(function(callback){
       try {
         nativeExitFullscreen();
 
@@ -110,7 +107,6 @@ Elm.Native.History.make = function(localRuntime){
         return callback(Task.fail());
       }
     });
-  };
 
   var checkStatus = function() {
     // TODO
@@ -118,8 +114,8 @@ Elm.Native.History.make = function(localRuntime){
 
   return {
     fullscreenActive  : fullscreenActive,
-    requestFullscreen : requestFullscreen,
-    exitFullscreen    : exitFullscreen,
+    request           : request,
+    exit              : exit,
     checkStatus       : checkStatus
   };
 

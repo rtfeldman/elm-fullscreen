@@ -1,6 +1,15 @@
-module Fullscreen where
+module Fullscreen (Status(Active,RequestAvailable,RequestUnavailable,Unsupported), RequestError(NotAllowed), isActive, request, exit, status) where
+
 {-| Elm bindings to HTML5 Fullscreen API.
 
+# Status and Errors
+@docs Status, RequestError
+
+# Request or exit Fullscreen Mode
+@docs request, exit
+
+# Status
+@docs isActive, status
 -}
 
 import Signal
@@ -12,7 +21,7 @@ import Native.Fullscreen
 {-|
   * Active - The page is currently in Fullscreen Mode.
   * RequestAvailable - The page is in a state where Fullscreen Mode can be requested.
-  * RequestUnvailable - The page is not a state where Fullscreen Mode can be requested.
+  * RequestUnvailable - The page is not in a state where Fullscreen Mode can be requested.
   * Unsupported - This browser does not support the Fullscreen API.
 -}
 type Status
@@ -50,14 +59,14 @@ See the spec for more info: https://fullscreen.spec.whatwg.org/#api
 -}
 request : Task RequestError ()
 request =
-  Native.Fullscreen.requestFullscreen
+  Native.Fullscreen.request
 
 
 {-| Requests that the document exit Fullscreen Mode.
 -}
 exit : Task error ()
 exit =
-  Native.Fullscreen.exitFullscreen
+  Native.Fullscreen.exit
 
 
 {-|
